@@ -6,10 +6,6 @@
 
 import os
 
-# ---------- LIMPIAR CONSOLA ----------
-def limpiar_consola():
-    os.system("cls" if os.name == "nt" else "clear")
-
 # ---------- COLORES PARA CONSOLA ----------
 AZUL     = "\033[94m"
 VERDE    = "\033[92m"
@@ -45,25 +41,31 @@ def calcular_cantidad_a_pedir(stock_actual, stock_minimo):
         return 0
 
 
+# ---------- LIMPIAR CONSOLA ----------
+def limpiar_consola():
+    os.system("cls" if os.name == "nt" else "clear")
+
+
 # ---------- PAUSA: esperar que el usuario decida ----------
 def pausar():
-    print(f"\n{AZUL}{'=' * 58}{RESET}")
-    input(f"{BLANCO}  Presione ENTER para volver al menu principal...{RESET}")
+    print(AZUL + "\n" + "=" * 58 + RESET)
+    input(BLANCO + "  Presione ENTER para volver al menu principal..." + RESET)
 
 
 # ---------- MOSTRAR TODOS LOS PRODUCTOS ----------
 def mostrar_productos():
     limpiar_consola()
-    print(f"\n{AZUL}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{AZUL}{NEGRITA}   LISTA DE PRODUCTOS Y STOCK MINIMO REQUERIDO{RESET}")
-    print(f"{AZUL}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{BLANCO}  Stock en {ROJO}ROJO{RESET}{BLANCO}: por debajo del minimo requerido.{RESET}")
-    print(f"{BLANCO}  Stock en {VERDE}VERDE{RESET}{BLANCO}: nivel correcto o superior.{RESET}")
-    print(f"{AZUL}{'-' * 58}{RESET}")
-    print(f"{BLANCO}{NEGRITA}  {'N':<4} {'Codigo':<8} {'Articulo':<22} {'Actual':>8} {'Minimo':>8}{RESET}")
-    print(f"{AZUL}{'-' * 58}{RESET}")
+    print(AZUL + NEGRITA + "\n" + "=" * 58 + RESET)
+    print(AZUL + NEGRITA + "   LISTA DE PRODUCTOS Y STOCK MINIMO REQUERIDO" + RESET)
+    print(AZUL + NEGRITA + "=" * 58 + RESET)
+    print(BLANCO + "  Stock en " + ROJO + "ROJO" + RESET + BLANCO + ": por debajo del minimo requerido." + RESET)
+    print(BLANCO + "  Stock en " + VERDE + "VERDE" + RESET + BLANCO + ": nivel correcto o superior." + RESET)
+    print(AZUL + "-" * 58 + RESET)
+    print(BLANCO + NEGRITA + "  " + "N".ljust(4) + "Codigo".ljust(8) + "Articulo".ljust(22) + "Actual".rjust(8) + "Minimo".rjust(8) + RESET)
+    print(AZUL + "-" * 58 + RESET)
 
-    for i, articulo in enumerate(inventario, start=1):
+    numero = 1
+    for articulo in inventario:
         codigo       = articulo[0]
         nombre       = articulo[1]
         stock_actual = articulo[2]
@@ -74,30 +76,30 @@ def mostrar_productos():
         else:
             color_actual = VERDE
 
-        print(f"{BLANCO}  {i:<4} {codigo:<8} {nombre:<22} {color_actual}{stock_actual:>8}{RESET} {BLANCO}{stock_minimo:>8}{RESET}")
+        print(BLANCO + "  " + str(numero).ljust(4) + codigo.ljust(8) + nombre.ljust(22) + color_actual + str(stock_actual).rjust(8) + RESET + BLANCO + str(stock_minimo).rjust(8) + RESET)
+        numero = numero + 1
 
-    print(f"{AZUL}{'=' * 58}{RESET}")
-    print(f"{AMARILLO}  NOTA: Para ver el informe detallado de pedidos,{RESET}")
-    print(f"{AMARILLO}        seleccione la opcion 3 en el menu principal.{RESET}")
-    print(f"{AZUL}{'=' * 58}{RESET}")
+    print(AZUL + "=" * 58 + RESET)
+    print(AMARILLO + "  NOTA: Para ver el informe detallado de pedidos," + RESET)
+    print(AMARILLO + "        seleccione la opcion 3 en el menu principal." + RESET)
+    print(AZUL + "=" * 58 + RESET)
     pausar()
 
 
 # ---------- ACTUALIZAR STOCK ----------
 def actualizar_inventario():
     limpiar_consola()
-    print(f"\n{AMARILLO}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{AMARILLO}{NEGRITA}   ACTUALIZACION DE STOCK ACTUAL{RESET}")
-    print(f"{AMARILLO}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{BLANCO}  Ingrese el stock actual para cada producto:{RESET}\n")
+    print(AMARILLO + NEGRITA + "\n" + "=" * 58 + RESET)
+    print(AMARILLO + NEGRITA + "   ACTUALIZACION DE STOCK ACTUAL" + RESET)
+    print(AMARILLO + NEGRITA + "=" * 58 + RESET)
 
-    print(f"{AMARILLO}  COMO FUNCIONA ESTA SECCION:{RESET}")
-    print(f"{BLANCO}  - Escriba un numero POSITIVO si recibio o agrego productos.{RESET}")
-    print(f"{BLANCO}    Ejemplo: llego un pedido de 20 lapiceros  ->  escriba: 20{RESET}")
-    print(f"{BLANCO}  - Escriba un numero NEGATIVO si vendio o consumio productos.{RESET}")
-    print(f"{BLANCO}    Ejemplo: se vendieron 5 cuadernos        ->  escriba: -5{RESET}")
-    print(f"{BLANCO}  - Presione ENTER sin escribir nada si no hubo cambios.{RESET}")
-    print(f"{AMARILLO}  {'- ' * 29}{RESET}\n")
+    print(AMARILLO + "  COMO FUNCIONA ESTA SECCION:" + RESET)
+    print(BLANCO + "  - Numero POSITIVO si recibio o agrego productos." + RESET)
+    print(BLANCO + "    Ejemplo: llego un pedido de 20 lapiceros  ->  escriba: 20" + RESET)
+    print(BLANCO + "  - Numero NEGATIVO si vendio o consumio productos." + RESET)
+    print(BLANCO + "    Ejemplo: se vendieron 5 cuadernos        ->  escriba: -5" + RESET)
+    print(BLANCO + "  - Presione ENTER sin escribir nada si no hubo cambios." + RESET)
+    print(AMARILLO + "  " + "- " * 29 + RESET + "\n")
 
     for articulo in inventario:
         nombre       = articulo[1]
@@ -105,81 +107,85 @@ def actualizar_inventario():
         stock_minimo = articulo[3]
 
         while True:
-            entrada = input(f"  {BLANCO}{nombre:<24} [actual: {AMARILLO}{stock_actual}{BLANCO}] -> Ajuste (+/-): {RESET}")
+            entrada = input(BLANCO + "  " + nombre.ljust(24) + " [actual: " + AMARILLO + str(stock_actual) + BLANCO + "] -> Ajuste (+/-): " + RESET)
 
             if entrada == "":
-                print(f"  {VERDE}  Sin cambios. Se mantiene en {stock_actual} unidades. (Minimo: {stock_minimo}){RESET}")
+                print(VERDE + "     Sin cambios. Se mantiene en " + str(stock_actual) + " unidades. (Minimo: " + str(stock_minimo) + ")" + RESET)
                 break
             else:
                 try:
-                    ajuste = int(entrada)
+                    ajuste      = int(entrada)
                     nuevo_stock = stock_actual + ajuste
 
                     if nuevo_stock < 0:
-                        print(f"  {ROJO}  El stock no puede quedar negativo ({nuevo_stock}). Intente de nuevo.{RESET}")
+                        print(ROJO + "     El stock no puede quedar negativo (" + str(nuevo_stock) + "). Intente de nuevo." + RESET)
                     else:
                         articulo[2] = nuevo_stock
+
                         if ajuste > 0:
-                            print(f"  {VERDE}  Se agregaron {ajuste} unidades. Stock: {stock_actual} -> {nuevo_stock}. (Minimo: {stock_minimo}){RESET}")
+                            print(VERDE + "     Se agregaron " + str(ajuste) + " unidades. Stock: " + str(stock_actual) + " -> " + str(nuevo_stock) + ". (Minimo: " + str(stock_minimo) + ")" + RESET)
                         else:
-                            print(f"  {AMARILLO}  Se descontaron {abs(ajuste)} unidades. Stock: {stock_actual} -> {nuevo_stock}. (Minimo: {stock_minimo}){RESET}")
+                            print(AMARILLO + "     Se descontaron " + str(abs(ajuste)) + " unidades. Stock: " + str(stock_actual) + " -> " + str(nuevo_stock) + ". (Minimo: " + str(stock_minimo) + ")" + RESET)
 
                         if nuevo_stock < stock_minimo:
                             faltante = stock_minimo - nuevo_stock
-                            print(f"  {ROJO}  ALERTA: Faltan {faltante} unidades para el minimo requerido.{RESET}")
+                            print(ROJO + "     ALERTA: Faltan " + str(faltante) + " unidades para el minimo requerido." + RESET)
+
                         break
                 except ValueError:
-                    print(f"  {ROJO}  Ingrese un numero con signo (+10 o -10) o ENTER para dejar igual.{RESET}")
+                    print(ROJO + "     Ingrese un numero con signo (+10 o -10) o ENTER para dejar igual." + RESET)
 
-    print(f"\n{VERDE}{NEGRITA}  Proceso de actualizacion finalizado.{RESET}")
-    print(f"{AMARILLO}{'=' * 58}{RESET}")
+    print(VERDE + NEGRITA + "\n  Proceso de actualizacion finalizado." + RESET)
+    print(AMARILLO + "=" * 58 + RESET)
     pausar()
 
 
 # ---------- MOSTRAR INFORME DE PEDIDOS ----------
 def mostrar_informe():
     limpiar_consola()
-    print(f"\n{VERDE}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{VERDE}{NEGRITA}   INFORME DE AUDITORIA DE INVENTARIO{RESET}")
-    print(f"{VERDE}{NEGRITA}{'=' * 58}{RESET}")
-    print(f"{BLANCO}  Muestra el estado de cada producto y cuanto pedir.{RESET}")
-    print(f"{BLANCO}  Estado {ROJO}PEDIR{RESET}{BLANCO}: stock insuficiente. Estado {VERDE}OK{RESET}{BLANCO}: sin novedad.{RESET}")
-    print(f"{VERDE}{'-' * 58}{RESET}")
-    print(f"{BLANCO}{NEGRITA}  {'Codigo':<8} {'Articulo':<22} {'Actual':>7} {'Minimo':>7} {'A Pedir':>8}  {'Estado'}{RESET}")
-    print(f"{VERDE}{'-' * 58}{RESET}")
+    print(VERDE + NEGRITA + "\n" + "=" * 58 + RESET)
+    print(VERDE + NEGRITA + "   INFORME DE AUDITORIA DE INVENTARIO" + RESET)
+    print(VERDE + NEGRITA + "=" * 58 + RESET)
+    print(BLANCO + "  Muestra el estado de cada producto y cuanto pedir." + RESET)
+    print(BLANCO + "  Estado " + ROJO + "PEDIR" + RESET + BLANCO + ": stock insuficiente. Estado " + VERDE + "OK" + RESET + BLANCO + ": sin novedad." + RESET)
+    print(VERDE + "-" * 58 + RESET)
+    print(BLANCO + NEGRITA + "  " + "Codigo".ljust(8) + "Articulo".ljust(22) + "Actual".rjust(7) + "Minimo".rjust(7) + "A Pedir".rjust(9) + "  Estado" + RESET)
+    print(VERDE + "-" * 58 + RESET)
 
     articulos_a_pedir = []
 
     for articulo in inventario:
-        codigo       = articulo[0]
-        nombre       = articulo[1]
-        stock_actual = articulo[2]
-        stock_minimo = articulo[3]
-
+        codigo         = articulo[0]
+        nombre         = articulo[1]
+        stock_actual   = articulo[2]
+        stock_minimo   = articulo[3]
         cantidad_pedir = calcular_cantidad_a_pedir(stock_actual, stock_minimo)
 
         if cantidad_pedir > 0:
-            estado = f"{ROJO}PEDIR{RESET}"
+            estado = ROJO + "PEDIR" + RESET
             articulos_a_pedir.append((nombre, cantidad_pedir))
         else:
-            estado = f"{VERDE}OK   {RESET}"
+            estado = VERDE + "OK" + RESET
 
-        print(f"{BLANCO}  {codigo:<8} {nombre:<22} {stock_actual:>7} {stock_minimo:>7} {AMARILLO}{cantidad_pedir:>8}{RESET}  {estado}")
+        print(BLANCO + "  " + codigo.ljust(8) + nombre.ljust(22) + str(stock_actual).rjust(7) + str(stock_minimo).rjust(7) + AMARILLO + str(cantidad_pedir).rjust(9) + RESET + "  " + estado)
 
-    print(f"{VERDE}{'=' * 58}{RESET}")
-
-    print(f"\n{AZUL}{NEGRITA}  RESUMEN DE PEDIDOS A REALIZAR:{RESET}")
-    print(f"{AZUL}{'-' * 40}{RESET}")
+    print(VERDE + "=" * 58 + RESET)
+    print(AZUL + NEGRITA + "\n  RESUMEN DE PEDIDOS A REALIZAR:" + RESET)
+    print(AZUL + "-" * 40 + RESET)
 
     if len(articulos_a_pedir) == 0:
-        print(f"{VERDE}  Todo el inventario esta en orden. Sin pedidos.{RESET}")
+        print(VERDE + "  Todo el inventario esta en orden. Sin pedidos." + RESET)
     else:
-        for i, (nombre, cantidad) in enumerate(articulos_a_pedir, start=1):
-            print(f"{BLANCO}  {i}. {nombre:<22} Pedir: {AMARILLO}{cantidad} unidades{RESET}")
+        numero = 1
+        for item in articulos_a_pedir:
+            nombre   = item[0]
+            cantidad = item[1]
+            print(BLANCO + "  " + str(numero) + ". " + nombre.ljust(22) + " Pedir: " + AMARILLO + str(cantidad) + " unidades" + RESET)
+            numero = numero + 1
 
-    print(f"{AZUL}{'-' * 40}{RESET}")
-    print(f"{BLANCO}  Total de articulos a reabastecer: {AMARILLO}{len(articulos_a_pedir)}{RESET}")
-    print(f"{VERDE}{'=' * 58}{RESET}")
+    print(AZUL + "-" * 40 + RESET)
+    print(BLANCO + "  Total de articulos a reabastecer: " + AMARILLO + str(len(articulos_a_pedir)) + RESET)
+    print(VERDE + "=" * 58 + RESET)
     pausar()
 
 
@@ -187,16 +193,16 @@ def mostrar_informe():
 def menu():
     while True:
         limpiar_consola()
-        print(f"\n{AZUL}{NEGRITA}{'=' * 58}{RESET}")
-        print(f"{AZUL}{NEGRITA}   SISTEMA DE AUDITORIA Y CONTROL DE INVENTARIO{RESET}")
-        print(f"{AZUL}{NEGRITA}{'=' * 58}{RESET}")
-        print(f"{BLANCO}  1. Ver lista de productos{RESET}")
-        print(f"{BLANCO}  2. Actualizar inventario (ingresar stock actual){RESET}")
-        print(f"{BLANCO}  3. Mostrar informe de pedidos{RESET}")
-        print(f"{BLANCO}  4. Salir{RESET}")
-        print(f"{AZUL}{'-' * 58}{RESET}")
+        print(AZUL + NEGRITA + "\n" + "=" * 58 + RESET)
+        print(AZUL + NEGRITA + "   SISTEMA DE AUDITORIA Y CONTROL DE INVENTARIO" + RESET)
+        print(AZUL + NEGRITA + "=" * 58 + RESET)
+        print(BLANCO + "  1. Ver lista de productos" + RESET)
+        print(BLANCO + "  2. Actualizar inventario (ingresar stock actual)" + RESET)
+        print(BLANCO + "  3. Mostrar informe de pedidos" + RESET)
+        print(BLANCO + "  4. Salir" + RESET)
+        print(AZUL + "-" * 58 + RESET)
 
-        opcion = input(f"{BLANCO}  Seleccione una opcion (1-4): {RESET}")
+        opcion = input(BLANCO + "  Seleccione una opcion (1-4): " + RESET)
 
         if opcion == "1":
             mostrar_productos()
@@ -206,11 +212,11 @@ def menu():
             mostrar_informe()
         elif opcion == "4":
             limpiar_consola()
-            print(f"\n{VERDE}{NEGRITA}  Programa finalizado. Hasta pronto.{RESET}\n")
+            print(VERDE + NEGRITA + "\n  Programa finalizado. Hasta pronto.\n" + RESET)
             break
         else:
-            print(f"\n{ROJO}  Opcion invalida. Ingrese un numero del 1 al 4.{RESET}")
-            input(f"{BLANCO}  Presione ENTER para continuar...{RESET}")
+            print(ROJO + "\n  Opcion invalida. Ingrese un numero del 1 al 4." + RESET)
+            input(BLANCO + "  Presione ENTER para continuar..." + RESET)
 
 
 # ---------- PROGRAMA PRINCIPAL ----------
